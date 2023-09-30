@@ -1,0 +1,73 @@
+package Videogamestore;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Scanner;
+
+
+public class VideoGameStoreTest implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		VideoGameStore videogamelist = new VideoGameStore();
+		String filename;
+		int menuOption = 0;
+
+		while(menuOption >= 0) {
+			System.out.println("Main Menu");
+
+			System.out.printf("%-20s --> %2d\n", "Data input",0);
+			System.out.printf("%-20s --> %2d\n", "Display",1);
+			System.out.printf("%-20s --> %2d\n", "Write to file",2);
+			System.out.printf("%-20s --> %2d\n", "Exit",-1);
+			menuOption = input.nextInt();
+			input.nextLine();
+
+			if(menuOption > 3) {
+				System.out.printf("%d is an invalid Option.class Please try again\n", menuOption);
+				continue;
+			}
+
+			switch(menuOption) {
+			case 0: videogamelist = inputVideoGameData(input); break; 
+			case 1: videogamelist.displayALL(); break;
+			case 2: System.out.printf("Enter filename to write:");
+			filename = input.nextLine();
+			try {
+		videogamelist.writeToFile(filename);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			}
+		}
+
+		input.close();
+
+	}
+
+	private static VideoGameStore inputVideoGameData(Scanner input) {
+		VideoGameStore videogamelist = new VideoGameStore();
+		String name, publisher,  genre;
+		int year, n;
+
+		System.out.print("Enter number of videogames: ");
+		n = input.nextInt();
+
+		System.out.print("Enter each video game as: year, type, publisher, name :");
+
+		for(int i = 0; i < n; i++) {	
+			year = input.nextInt();
+			genre = input.next();
+			publisher = input.next();
+			name = input.nextLine();
+
+
+			VideoGame newVideoGame = new VideoGame(year,genre,publisher,name);
+			videogamelist.add(newVideoGame);
+		}
+		return videogamelist;
+
+	}
+}
