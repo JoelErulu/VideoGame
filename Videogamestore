@@ -1,0 +1,65 @@
+package Videogamestore;
+
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+
+
+public class VideoGameStore implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	private ArrayList<VideoGame> listVideoGames;
+
+	public VideoGameStore() {	listVideoGames = new ArrayList<VideoGame>();}
+
+	// accesors
+	public VideoGame get(int index) {return listVideoGames.get(index); }
+	public int getNumVideoGames() {return listVideoGames.size(); }
+
+	// mutator
+	public void add(VideoGame newVideoGame) { 
+		listVideoGames.add(newVideoGame);
+	}
+
+	public void displayALL() {
+		System.out.printf("%s %10s %10s %10s\n", "Year", "Publisher", "Genre", "Name");
+
+		// horizontal line
+		for(int i = 0; i < 100; i++)
+			System.out.print("-");
+
+		System.out.println();
+
+		// display employees
+		for(VideoGame game : listVideoGames) {
+			System.out.printf("%s %10s %10s %10s\n", game.getYear(), game.getPublisher(), game.getGenre(), game.getName());
+		}
+	}
+	public void writeToFile(String filename) throws IOException {
+		try {
+			// create an output stream to file
+			DataOutputStream output = new DataOutputStream(new FileOutputStream(filename));
+
+			// output employees to file
+			for(VideoGame game : listVideoGames) {
+				output.writeInt(game.getYear());					
+				output.writeUTF(game.getPublisher());
+				output.writeUTF(game.getGenre());
+				output.writeUTF(game.getName());
+			}
+			output.close();
+			System.out.printf("%d records written to the file %s\n",  listVideoGames.size(), filename);
+		} catch (FileNotFoundException e) {
+			System.out.printf("File %s not found\n", filename);
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+
+	}
+
+}
