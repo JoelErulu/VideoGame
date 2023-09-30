@@ -1,0 +1,30 @@
+package Videogamestore;
+
+import java.io.Serializable;
+
+public class VideoGame implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private String name, publisher, genre;
+	private int year;
+
+	public VideoGame(int year, String publisher, String genre, String name) {
+		this.year = year;
+		this.publisher = publisher;
+		this.genre = genre;
+		this.year = year;
+		this.name = name;
+
+	}
+
+	public String getName() {	return name;}
+	public String getPublisher() {	return publisher;}
+	public String getGenre() {	return genre;}
+	public int getYear() {	return year;}
+
+	@Override
+	public String toString() {
+		return "VideoGame [name=" + name + ", publisher=" + publisher + ", genre=" + genre + ", year=" + year + "]";
+	}
+
+
+}
